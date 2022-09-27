@@ -2727,7 +2727,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:*, @types/eslint@npm:^7.29.0 || ^8.4.1":
+"@types/eslint@npm:*, @types/eslint@npm:^7.29.0 || ^8.4.1, @types/eslint@npm:^8":
   version: 8.4.6
   resolution: "@types/eslint@npm:8.4.6"
   dependencies:
@@ -4285,6 +4285,7 @@ __metadata:
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.0.0
     "@testing-library/user-event": ^13.2.1
+    "@types/eslint": ^8
     "@types/jest": ^27.0.1
     "@types/node": ^16.7.13
     "@types/prettier": ^2
@@ -4297,6 +4298,7 @@ __metadata:
     "@yarnpkg/pnpify": ^4.0.0-rc.21
     "@yarnpkg/sdks": ^3.0.0-rc.21
     axios: ^0.27.2
+    eslint: ^8.24.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.2.1
     eslint-plugin-react-hooks: ^4.6.0
@@ -6205,7 +6207,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.3.0":
+"eslint@npm:^8.24.0, eslint@npm:^8.3.0":
   version: 8.24.0
   resolution: "eslint@npm:8.24.0"
   dependencies:
