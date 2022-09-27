@@ -2,8 +2,8 @@ import { css, DefaultTheme } from 'styled-components';
 
 const palette = {
   // Primary
-  mainColor: '#E81818',
-  subColor: '#222222',
+  mainColor: '#D0E8FD',
+  subColor: '#357AE1',
   blackColor: '#000000',
   redColor: '#F24E1E',
   fontColor: '#ffffff',
@@ -23,8 +23,8 @@ const palette = {
 const fontSize = {
   small: '12px',
   medium: '14px',
-  large: '16px',
-  xLarge: '20px',
+  large: '18px',
+  xLarge: '40px',
 } as const;
 
 const fontWeight = {

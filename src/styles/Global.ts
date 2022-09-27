@@ -51,7 +51,6 @@ const GlobalStyle = createGlobalStyle`
         max-width: 100%;
     }
     button {
-        background: none;
         border: 0;
         cursor: pointer;
     }
@@ -92,7 +91,6 @@ const GlobalStyle = createGlobalStyle`
         transition: all 0.1s linear;
     }
     button {
-        background-color: transparent;
         text-decoration: none;
         border: none;
         outline: none;

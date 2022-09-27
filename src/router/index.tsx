@@ -1,5 +1,5 @@
-import HomePath from './path/Home';
+import SearchPath from './path/Search';
 
 export default function Routes() {
-  return [...HomePath()];
+  return [...SearchPath()];
 }

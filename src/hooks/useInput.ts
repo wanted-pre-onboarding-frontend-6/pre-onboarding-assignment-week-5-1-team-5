@@ -1,11 +1,18 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 export default function useInput(initialValue: string) {
   const [value, setValue] = useState(initialValue);
 
-  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setValue(e.target.value);
+  const changeValueHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setValue(e.target.value);
+    },
+    [],
+  );
+
+  const deleteValueHandler = useCallback(() => {
+    setValue('');
   }, []);
 
-  return [value, onChange, setValue] as const;
+  return [value, changeValueHandler, deleteValueHandler, setValue] as const;
 }
