@@ -1,4 +1,6 @@
-export const debounce = (callback) => {
-  const debounce = setTimeout(callback, 300);
+export default function debounceEffect(callback, deps) {
+  const debounce = setTimeout(() => {
+    return callback(deps);
+  }, 300);
   return () => clearTimeout(debounce);
-};
+}

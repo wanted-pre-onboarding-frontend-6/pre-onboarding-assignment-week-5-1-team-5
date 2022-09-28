@@ -1,13 +1,34 @@
-function KeywordList({ recommendKeywords }) {
+import styled from "styled-components";
+
+function KeywordList({ recommendKeywords, search, index }) {
+  const sliceKeywords = recommendKeywords.slice(0, 5);
+
   return (
     <>
-      <div>추천 검색어</div>
+      {sliceKeywords.map((keywordItem, idx) => {
+        const keyword = keywordItem.sickNm;
+        const searchIndex = keyword.indexOf(search);
+        const prevSearch = keyword.slice(0, searchIndex);
+        const nextSearch = keyword.slice(searchIndex + 1);
 
-      {recommendKeywords.map((keyword) => (
-        <div key={keyword.sickCd}>{keyword.sickNm}</div>
-      ))}
+        return (
+          <Container key={idx} isFocus={index === idx}>
+            <span>{prevSearch}</span>
+            <SearchText>{search}</SearchText>
+            <span>{nextSearch}</span>
+          </Container>
+        );
+      })}
     </>
   );
 }
 
 export default KeywordList;
+
+const Container = styled.div`
+  background: ${({ isFocus }) => isFocus && "#f5f5f5"};
+`;
+
+const SearchText = styled.span`
+  font-weight: bold;
+`;

@@ -1,5 +1,5 @@
-const writeToCache = (key, data) => localStorage.setItem(key, data);
+const writeToCache = (key, data) => sessionStorage.setItem(key, data);
 
-const readFromCache = (key) => JSON.parse(localStorage.getItem(key));
+const readFromCache = (key) => JSON.parse(sessionStorage.getItem(key));
 
 export { writeToCache, readFromCache };
