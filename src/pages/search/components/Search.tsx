@@ -1,11 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import BASE_URL from '../../../config';
 import useInput from '../../../hooks/useInput';
+import { recentTextsAtom } from '../../../recoil/search/atoms';
 import SearchDropDown from './SearchDropDown';
 
 export default function Search() {
-  const [isFocus, setIsFocus] = useState<boolean>(false);
   const [searchValue, searchValueHandler, deleteValueHanler] = useInput('');
+  const [recentTexts, setRecentTexts] = useRecoilState(recentTextsAtom);
+  const recentTextID = useRef<number>(0);
+
+  const URL = `${BASE_URL}sick?q=${searchValue}`;
+
+  const cache = caches.open('search');
+
+  fetch(URL).then(() => cache.then(cache => cache.add(URL)));
+  cache.then(cache => cache.match(URL)).then(res => res?.json().then(data => console.log(data)));
+
+  const recentTextsHandler = () => {
+    recentTextID.current++;
+
+    const copyRecentTexts = [...recentTexts];
+
+    if (copyRecentTexts.length > 5) return () => copyRecentTexts.splice(4, 1);
+
+    copyRecentTexts.splice(0, 0, { searchValue, id: recentTextID.current });
+
+    setRecentTexts(copyRecentTexts);
+  };
+
+  console.info('calling api');
 
   return (
     <Container>
@@ -17,14 +42,16 @@ export default function Search() {
         <SearchBar
           type="text"
           placeholder="질환명을 입력해 주세요."
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
           value={searchValue}
           onChange={e => searchValueHandler(e)}
         />
-        <SearchBtn>검색</SearchBtn>
-        <TextDeleteBtn onClick={deleteValueHanler}>X</TextDeleteBtn>
-        {isFocus && <SearchDropDown setIsFocus={setIsFocus} />}
+        <SearchBtn onClick={recentTextsHandler} tabIndex={-1}>
+          검색
+        </SearchBtn>
+        <TextDeleteBtn onClick={deleteValueHanler} tabIndex={-1}>
+          X
+        </TextDeleteBtn>
+        <SearchDropDown />
       </SearchBarContainer>
     </Container>
   );

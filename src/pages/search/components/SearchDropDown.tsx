@@ -1,24 +1,30 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { recentTextsAtom } from '../../../recoil/search/atoms';
 
-export default function SearchDropDown({ setIsFocus }: SearchDropDownProps) {
+export default function SearchDropDown() {
+  const recentTexts = useRecoilValue(recentTextsAtom);
+
   return (
-    <Container onFocus={() => setIsFocus(true)}>
+    <Container tabIndex={0}>
       <RecentContainer>
         <Title>최근 검색어</Title>
         <ol>
-          <RecentText>야호</RecentText>
-          <RecentText>야호</RecentText>
-          <RecentText>야호</RecentText>
-          <RecentText>야호</RecentText>
-          <RecentText>야호</RecentText>
+          {recentTexts.map(recentText => {
+            return (
+              <RecentText tabIndex={0} key={recentText.id}>
+                {recentText.searchValue}
+              </RecentText>
+            );
+          })}
         </ol>
       </RecentContainer>
       <hr />
       <RecommendContaniner>
         <Title>추천 검색어로 검색해보세요</Title>
         <ul>
-          <RecommendText>추천</RecommendText>
+          <RecommendText tabIndex={0}>추천</RecommendText>
           <RecommendText>추천</RecommendText>
           <RecommendText>추천</RecommendText>
           <RecommendText>추천</RecommendText>
@@ -27,10 +33,6 @@ export default function SearchDropDown({ setIsFocus }: SearchDropDownProps) {
       </RecommendContaniner>
     </Container>
   );
-}
-
-interface SearchDropDownProps {
-  setIsFocus: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Container = styled.div`
