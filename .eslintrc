@@ -1,0 +1,20 @@
+{
+  "extends": ["react-app", "eslint:recommended"],
+  "plugins": ["prettier"],
+  "rules": {
+    "react/destructuring-assignment": "warn",
+    "react/no-direct-mutation-state": "warn",
+    "react/jsx-no-useless-fragment": "error",
+    "react/jsx-key": "error",
+    "react/self-closing-comp": "warn",
+    "react/jsx-curly-brace-presence": "warn",
+    "no-undef": "warn",
+    "no-useless-escape": "off",
+    "no-unused-vars": "warn",
+    "no-var": "error",
+    "no-multiple-empty-lines": "error",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "eqeqeq": "error",
+    "dot-notation": "warn"
+  }
+}
