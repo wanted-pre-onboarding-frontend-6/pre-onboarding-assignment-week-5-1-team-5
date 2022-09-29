@@ -137,13 +137,14 @@ $ npm start
 - 질환면 검색시 API 호출 통해서 검색어 추천 기능 구현
     - 사용자가 입력한 텍스트와 일치하는 부분 볼드처리
         - split과 map을 활용한 서비스 로직 구현
+        
+    - 검색어가 없을 시 '검색어 없음' 표출
+        - 고객의 편의성을 위하여 추천 검색어 리스트가 없을 시 추천 검색어 리스트를 보여주지 않도록 수정
 ```
           if (keyword !== '' && item.sickNm.includes(keyword)) {
             const KeywordPoint = item.sickNm.split(new RegExp(`(${keyword})`, 'gi'));
 ```
 
-    - 검색어가 없을 시 '검색어 없음' 표출
-        - 고객의 편의성을 위하여 추천 검색어 리스트가 없을 시 추천 검색어 리스트를 보여주지 않도록 수정
 
 - API 호출 최적화
     - javascript의 cache api를 활용하여 cache storage를 이용한 로컬 캐싱
