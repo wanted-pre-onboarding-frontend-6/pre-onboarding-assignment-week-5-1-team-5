@@ -18,7 +18,7 @@
 
 ## 📌 배포
 
-(링크 넣기)
+https://search-fe-5.netlify.app/
 
 <br />
 
