@@ -18,6 +18,7 @@ export const Wrapper = styled.div`
 `;
 
 export const List = styled.ul`
+  margin-bottom: 2rem;
   & > li:last-child {
     border-radius: 0 0 1.5rem 1.5rem;
   }
@@ -41,4 +42,29 @@ export const Item = styled.li<StyleProps>`
   font-size: 1.3rem;
   font-weight: 500;
   ${({ active }) => active && 'background-color: #f2f2f2;'};
+
+  & span {
+    font-weight: 900;
+    background-color: #ffd700;
+  }
+`;
+
+export const Current = styled.div`
+  margin: 2rem;
+
+  & > p {
+    color: #999;
+    padding: 0 2rem;
+  }
+
+  & > span {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem 0.5rem 0;
+    background-color: #f2f2f2;
+    border-radius: 1rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
 `;

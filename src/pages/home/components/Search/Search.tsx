@@ -1,67 +1,42 @@
 import useInput from 'hooks/useInput';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import * as Styled from './Style';
-import { useCallback } from 'react';
-import SickApi from 'apis/sick/sickApi';
-import SearchPreview from './Preview/Preview';
+import SearchPreview from '../Preview/Preview';
+import useRegOnlyWord from 'pages/home/hooks/useRegOnlyWord';
+import useSickApiCache from 'pages/home/hooks/useSickApiCache';
+import useDeleteApiCache from 'pages/home/hooks/useDeleteApiCache';
+import KeywordRepositroy from 'repository/keywordRepository';
 
 const HomeSearch = () => {
-  // Search KeyWord state
+  // chache name consts
+  const CACHE_NAME = 'searchCache';
+
+  // search KeyWord state
   const [keyword, onChageKeyword, setKeyword] = useInput('');
   const [previewIndex, setPreviewIndex] = useState<number>(0);
   const [previewShowLimit, setPreviewShowLimit] = useState<number>(5);
+  const [currentList, setCurrentList] = useState<Array<string>>([]);
 
-  // Search List state
-  const [list, setList] = useState<any>([]);
-
-  // Cache API
-  const apiCahce = useCallback(
-    async (keyword: string) => {
-      const cacheStore = await caches.open('search-api-cache');
-      const cache = await cacheStore.match(keyword);
-      if (cache) {
-        const cacheData = await cache.json();
-        return setList(cacheData);
-      }
-      try {
-        const response = await SickApi.getSickList({ params: { q: keyword } });
-        console.log('api...');
-        const data = await response.data;
-        await cacheStore.put(keyword, new Response(JSON.stringify(data)));
-        setList(data);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [keyword],
-  );
-
-  // onChnage keyword
   useEffect(() => {
-    if (keyword.length <= 0) return setList([]);
-    let serarchKeyword = keyword;
-    const isWord = /[ㄱ-ㅎ-ㅏ-ㅣ]/;
-
-    for (const key of keyword) {
-      if (isWord.test(key)) {
-        serarchKeyword = serarchKeyword.replace(key, '');
-      }
-    }
-    if (serarchKeyword === '') return;
-    apiCahce(serarchKeyword);
-  }, [keyword]);
-
-  // delete cache API
-  useEffect(() => {
-    return () => {
-      caches.keys().then((names) => {
-        for (let name of names) caches.delete(name);
-      });
-    };
+    const currentKeyword: Array<string> = KeywordRepositroy.getKeywords();
+    setCurrentList(currentKeyword);
   }, []);
 
-  // onChnage preview index
-  const onSelectPreview = (e: any) => {
+  // regexp keyword test onlyWord(ㄱ-ㅎ, ㅏ-ㅣ)
+  const searchKeyword: string = useRegOnlyWord(keyword);
+
+  // sick search api cache
+  const [searchList] = useSickApiCache({
+    params: { q: searchKeyword },
+    cacheName: CACHE_NAME,
+    cacheKey: searchKeyword,
+  });
+
+  // delete cache
+  useDeleteApiCache(CACHE_NAME);
+
+  // handler onchage preview index
+  const onSelectPreview = (e: KeyboardEvent | any) => {
     if (e.nativeEvent.isComposing) return;
     if (e.key === 'ArrowDown') {
       if (previewIndex > previewShowLimit) return;
@@ -74,18 +49,31 @@ const HomeSearch = () => {
 
     if (e.key === 'Enter') {
       setPreviewIndex(0);
-      setKeyword(list[previewIndex - 1].sickNm);
+      setKeyword(searchList[previewIndex - 1].sickNm);
     }
+  };
+
+  //hander submit keyword
+  const onSubmitKeyword = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (keyword === '') return;
+    KeywordRepositroy.setKeywords(keyword);
+    const currentKeyword = KeywordRepositroy.getKeywords();
+    setCurrentList(currentKeyword);
+    alert('검색어 : ' + keyword);
   };
 
   return (
     <Styled.Wrapper>
-      <Styled.Container>
+      <Styled.Form onSubmit={onSubmitKeyword}>
         <Styled.Input value={keyword} onChange={onChageKeyword} onKeyDown={onSelectPreview} />
         <button>검색</button>
-      </Styled.Container>
+      </Styled.Form>
       <SearchPreview
-        list={list}
+        list={searchList}
+        keyword={searchKeyword}
+        currentList={currentList}
+        setCurrentList={setCurrentList}
         previewIndex={previewIndex}
         setPreviewIndex={setPreviewIndex}
         previewShowLimit={previewShowLimit}

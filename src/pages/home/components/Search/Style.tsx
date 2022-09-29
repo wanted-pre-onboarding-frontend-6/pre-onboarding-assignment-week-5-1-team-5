@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   width: 100%;
 `;
-export const Container = styled.div`
+export const Form = styled.form`
   position: relative;
   & > button {
     position: absolute;
