@@ -147,7 +147,7 @@ $ npm start
 
 - API 호출 최적화
     - javascript의 cache api를 활용하여 cache storage를 이용한 로컬 캐싱
-    - cache api는 http request의 response를 저장하기 위한 웹스토리지이며, 네트워크 연결이 없어도 해당 정보 사용이 가능
+    - cache api는 http request의 response를 저장하기 위한 웹스토리지이며, 네트워크 연결이 없어도 사용이 가능
     - cache api에 response를 저장 후 동일한 key가 cache storege에 입력되면 저장되어있던 데이터 사용
     - 자음 모음 입력 시 불필요한 api 호출을 막기 위하여 정규표현식 검사를 통한 API 호출 최적화 진행
      
