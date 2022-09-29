@@ -4,7 +4,7 @@ const useDeleteApiCache = (cacheName: string) => {
   useEffect(() => {
     return () => {
       caches.keys().then((names) => {
-        for (let name of names) {
+        for (const name of names) {
           if (name === cacheName) {
             caches.delete(name);
           }
