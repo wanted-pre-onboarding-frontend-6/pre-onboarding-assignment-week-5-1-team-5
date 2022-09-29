@@ -6,7 +6,7 @@
 검색창 구현 + 검색어 추천 기능 구현
 
 ### 개발 기간
-`2022/09/20 ~ 2022/09/25`
+`2022/09/27 ~ 2022/09/29`
 
 <br/>
 
@@ -83,7 +83,22 @@ $ npm start
 <summary>open</summary>
 
 ```
-수정
+├─apis
+│  └─sick
+├─hooks
+├─pages
+│  └─home
+│      ├─components
+│      │  ├─Banner
+│      │  ├─Preview
+│      │  └─Search
+│      └─hooks
+├─repository
+├─styles
+├─types
+│  ├─api
+│  └─style
+└─__test__
 ```
 
 </details>
