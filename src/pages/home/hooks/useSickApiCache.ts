@@ -21,6 +21,7 @@ const useSickApiCache = ({ params, cacheName, cacheKey }: useApiCacheType) => {
       }
       try {
         const response = await sickApi.getSickList({ params });
+        console.log('calling api...');
         const data = await response.data;
         await cacheStore.put(cacheKey, new Response(JSON.stringify(data)));
         setItem(data);
